@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+  }
+  
+  header {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .admin-access {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .admin-access input {
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  
+  .admin-access button {
+    padding: 0.5rem 1rem;
+    background-color: #0056b3;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .admin-access button:hover {
+    background-color: #003d80;
+  }
+  
+  main {
+    padding: 1rem;
+  }
+  
+  section {
+    margin-bottom: 1.5rem;
+  }

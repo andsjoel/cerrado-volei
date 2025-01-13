@@ -1,0 +1,27 @@
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cerrado Vôlei - Partidas</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header>
+    <h1>Cerrado Vôlei</h1>
+    <div class="admin-access">
+      <input type="text" id="admPass" placeholder="Senha" autocomplete="off">
+      <button id="admBtn">Acessar</button>
+    </div>
+  </header>
+  
+  <main>
+    <section id="teamsContainer">
+      <div id="teams"></div>
+    </section>
+  </main>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cerrado Vôlei - Admin</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Painel Administrativo - Cerrado Vôlei</h1>
+  </header>
+  <main id="adm">
+    <form id="playerForm">
+
+      <label for="playerName">Nome do Jogador:</label>
+      <input type="text" id="playerName" autocomplete="off" placeholder="Digite o nome" required>
+
+      <div>
+        <div class="checkbox-wrapper-58">
+          <label class="switch">
+            <input type="checkbox" id="isSetter">
+            <span class="slider"></span>
+          </label>
+          Levantador
+        </div>
+        <div class="checkbox-wrapper-58">
+          <label class="switch">
+            <input type="checkbox" id="isFemale">
+            <span class="slider"></span>
+          </label>
+          Mulher
+        </div>
+      </div>
+
+      <button type="submit">Adicionar Jogador</button>
+      <button id="removePlayerBtn">Remover Jogador</button>
+    </form>
+
+    <div id="teamsContainer">
+      <div id="teams"></div>
+    </div>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
+
+  <script type="module" src="./js/admin.js"></script>
+</body>
+</html>
