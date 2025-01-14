@@ -1,45 +1,172 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
+* {
     padding: 0;
-    background-color: #f4f4f9;
-    color: #333;
-  }
-  
-  header {
-    background-color: #007BFF;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --first-bg: #000;
+    --sec-bg: #000;
+    --third-bg: #000;
+    --first-font: #fff;
+    --sec-font: #fff;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* overflow: hidden; */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #000;
+    padding-top: 70px;
+}
+
+header {
+    background-color: #001247;
+    border-bottom: 3px solid #98cf16;
     color: #fff;
-    padding: 1rem;
-    text-align: center;
-  }
-  
-  .admin-access {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100vw;
+    height: 70px;
+    position: fixed;
+    top: 0;
+}
+
+header img {
+    width: 80px;
+}
+
+header div input {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    padding: 5px;
+    text-align: end;
+}
+
+header div input::placeholder {
+    color: #38007985;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+header div button {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    text-transform: uppercase;
+    background-color: #3bb12b;
+    color: var(--first-font);
+    font-weight: bold;
+}
+
+/* ######################################## SECTION */
+
+section {
     display: flex;
     justify-content: center;
-    margin-top: 1rem;
+    align-items: center;
+    min-width: 100%;
+    height: 100%;
+    color: var(--sec-font);
+    background-image: url(../images/background-cerrado.jpg);
+    background-size: auto;
+    background-position: top 0 center;
+    background-repeat: repeat-y;
+}
+
+.blink {
+    animation: blink 1s steps(1, end) infinite;
+    color: #022588;
+    background-color: white;
+    padding: 8px;
+    border-radius: 4px;
+    border: 2px solid rgb(216, 180, 20);
+    font-size: 15px;
   }
   
-  .admin-access input {
-    padding: 0.5rem;
-    margin-right: 0.5rem;
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
-  
-  .admin-access button {
-    padding: 0.5rem 1rem;
-    background-color: #0056b3;
-    color: #fff;
-    border: none;
+
+  /* ######################################## TEAMS */
+
+  #teamsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.ballon-hq {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team {
+    border: 2px solid #98cf16;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background-color: #5e919e;
+    color: var(--first-font);
+    width: 60%;
+    margin-top: 20px;
+}
+
+.player-space {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    margin: 3px 0;
+    border-bottom: 1px solid #ffffff;
+    /* border-radius: 5px; */
     cursor: pointer;
+    transition: background-color 0.2s ease;
   }
-  
-  .admin-access button:hover {
-    background-color: #003d80;
-  }
-  
-  main {
-    padding: 1rem;
-  }
-  
-  section {
-    margin-bottom: 1.5rem;
-  }
+
+  .player-empty {
+    background-color: #f8f8f8;
+}
+
+.player-setter {
+    background-color: #a4e8a4; /* Verde claro para levantadores */
+    border-radius: 8px;
+    border: none;
+    color: #252525;
+}
+
+.player-female {
+    background-color: #965296; /* Lilás para mulheres */
+    border-radius: 8px;
+    border: none;
+}
+
+.player-selected {
+    outline: 2px solid blue;
+}
+
+.player-empty-selected {
+    outline: 2px solid orange;
+}
+
+  /* ######################################## ADM PAGE */

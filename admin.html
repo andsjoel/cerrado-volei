@@ -1,49 +1,49 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cerrado Vôlei - Admin</title>
-  <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de Times de Vôlei</title>
+    <link rel="stylesheet" href="./css/admin.css">
 </head>
 <body>
-  <header>
-    <h1>Painel Administrativo - Cerrado Vôlei</h1>
-  </header>
-  <main id="adm">
-    <form id="playerForm">
-
-      <label for="playerName">Nome do Jogador:</label>
-      <input type="text" id="playerName" autocomplete="off" placeholder="Digite o nome" required>
-
-      <div>
-        <div class="checkbox-wrapper-58">
-          <label class="switch">
-            <input type="checkbox" id="isSetter">
-            <span class="slider"></span>
-          </label>
-          Levantador
+    <section id="adm">
+        <div class="rules">
+            <button id="clearTeams">Limpar!!!</button>
+            <button id="saideira">Saideira da Cerveja</button>
+            <!-- <button id="populateTeamsButton">Popular Times</button> -->
         </div>
-        <div class="checkbox-wrapper-58">
-          <label class="switch">
-            <input type="checkbox" id="isFemale">
-            <span class="slider"></span>
-          </label>
-          Mulher
+        <form id="playerForm">
+            <label for="playerName">Nome do Jogador:</label>
+            <input type="text" id="playerName" autocomplete="off" placeholder="Digite o nome" required>
+            <div class="checkbox-container">
+                    <div>
+                        <div class="checkbox-apple">
+                            <input class="yep" id="isSetter" type="checkbox">
+                            <label for="isSetter"></label>
+                            <span>Levantador</span>
+                          </div>
+                          <div class="checkbox-apple">
+                            <input class="yep" id="isFemale" type="checkbox">
+                            <label for="isFemale"></label>
+                            <span>Mulher</span>
+                          </div>
+                    </div>
+                  <button id="add-player" type="submit">+</button>
+            </div>
+            <button id="removePlayerBtn">Remover Jogador</button>
+        </form>
+
+        <div id="teamsContainer">
+            <div id="returningTeam"></div>
+            <div id="teams"></div>
         </div>
-      </div>
+        
+    </section>
 
-      <button type="submit">Adicionar Jogador</button>
-      <button id="removePlayerBtn">Remover Jogador</button>
-    </form>
+    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
 
-    <div id="teamsContainer">
-      <div id="teams"></div>
-    </div>
-  </main>
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
-
-  <script type="module" src="./js/admin.js"></script>
+    <script type="module" src="./js/admin.js"></script>
 </body>
 </html>

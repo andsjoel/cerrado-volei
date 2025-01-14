@@ -1,32 +1,50 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
 
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyA1O3YGQV1Up0n-wYXn34NyzMx0RT7NOL0",
-    authDomain: "parads-list.firebaseapp.com",
-    projectId: "parads-list",
-    storageBucket: "parads-list.appspot.com",
-    messagingSenderId: "502581426851",
-    appId: "1:502581426851:web:9374424441ce1bddc71d16"
+    apiKey: "AIzaSyAmnAK5EBYza79MQJmU4nTKVIzTjeOmEhw",
+    authDomain: "cerrado-volei.firebaseapp.com",
+    projectId: "cerrado-volei",
+    storageBucket: "cerrado-volei.firebasestorage.app",
+    messagingSenderId: "687787718559",
+    appId: "1:687787718559:web:47e3fddd979dee4fd06faa"
   };
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 const teamsContainer = document.getElementById('teamsContainer');
+const waitingPlayer = document.getElementById('waitingPlayer');
 
 function renderTeamsFromFirestore(teamsData) {
     teamsContainer.innerHTML = '';
 
     if (!teamsData || teamsData.length === 0) {
-        const htmlDiv = document.createElement('div');
+        const ballonHq = document.createElement('div');
+        ballonHq.classList.add('ballon-hq');
+
+        const imgHq = document.createElement('img');
+        imgHq.src = '../img/marvelvsdc.png';
+        imgHq.alt = 'Test'
 
         const waitingMessage = document.createElement('h2');
-        waitingMessage.textContent = 'Aguardando...';
-        waitingMessage.classList.add('blink');
+        waitingMessage.textContent = "Esperando pelo primeiro jogador";
+        waitingMessage.classList.add('blink')
+        // ballonHq.appendChild(imgHq)
+        ballonHq.appendChild(waitingMessage);
 
-        htmlDiv.appendChild(waitingMessage);
-        teamsContainer.appendChild(htmlDiv);
+        teamsContainer.appendChild(ballonHq);
 
+        const balao = document.createElement('p');
+
+        balloon.appendChild(balao)
+
+        teamsContainer.appendChild(balloon);
         return;
     }
 
@@ -56,12 +74,10 @@ function renderTeamsFromFirestore(teamsData) {
         team.players.forEach((player, playerIndex) => {
             const playerItem = document.createElement('div');
             const playerName = document.createElement('p');
-            
             playerItem.classList.add('player-space');
             if (player) {
                 playerName.textContent = player.name;
                 playerItem.appendChild(playerName)
-                
                 if (player.isSetter) {
                     playerItem.classList.add('player-setter');
                 }
@@ -76,23 +92,20 @@ function renderTeamsFromFirestore(teamsData) {
 
         teamDiv.appendChild(playerList);
         teamsContainer.appendChild(teamDiv);
-    })
+    });
 }
 
 db.collection('teams').doc('currentTeams').onSnapshot((doc) => {
     if (doc.exists) {
         const data = doc.data();
         const teamsData = data.teams;
-        const teamOnHold = data.teamOnHold;
-        
-        // Renderizar a lista de times na página
-        renderTeamsFromFirestore(teamsData, teamOnHold);
+        renderTeamsFromFirestore(teamsData);
     } else {
         console.log("No teams data found!");
     }
 });
 
-const correctPassword = "1234";
+const correctPassword = "123";
 
 document.getElementById("admBtn").addEventListener("click", function() {
     const inputPass = document.getElementById("admPass").value;
@@ -103,7 +116,6 @@ document.getElementById("admBtn").addEventListener("click", function() {
         // Se correta, redireciona para a página de administrador
         window.location.href = "admin.html";
     } else {
-        // Senha incorreta, exibe uma mensagem de erro
         alert("Senha incorreta!");
     }
 });
