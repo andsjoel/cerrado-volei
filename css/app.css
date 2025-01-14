@@ -121,11 +121,11 @@ section {
 }
 
 .team {
-    border: 2px solid #98cf16;
+    border: 2px solid #b0e03f;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 8px;
-    background-color: #5e919e;
+    background-color: #d6a00c;
     color: var(--first-font);
     width: 60%;
     margin-top: 20px;
@@ -145,7 +145,7 @@ section {
   }
 
   .player-empty {
-    background-color: #f8f8f8;
+    background-color: transparent;
 }
 
 .player-setter {
@@ -162,7 +162,7 @@ section {
 }
 
 .player-selected {
-    outline: 2px solid blue;
+    outline: 2px solid rgb(229, 255, 0);
 }
 
 .player-empty-selected {

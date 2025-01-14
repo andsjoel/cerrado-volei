@@ -204,11 +204,11 @@ section {
 }
 
 .team {
-    border: 2px solid #98cf16;
+    border: 2px solid #b0e03f;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 8px;
-    background-color: #5e919e;
+    background-color: #d6a00c;
     color: var(--first-font);
     width: 60%;
     margin-top: 20px;
@@ -225,6 +225,7 @@ section {
     /* border-radius: 5px; */
     cursor: pointer;
     transition: background-color 0.2s ease;
+    color: #fff;
   }
 
   .player-empty {
