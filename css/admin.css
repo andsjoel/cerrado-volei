@@ -127,7 +127,7 @@ section {
 .checkbox-apple {
     position: relative;
     width: 50px;
-    height: 15px;
+    height: 25px;
     margin: 10px;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -144,7 +144,7 @@ section {
     top: 0;
     left: 0;
     width: 50px;
-    height: 15px;
+    height: 25px;
     border-radius: 50px;
     background: linear-gradient(to bottom, #b3b3b3, #e6e6e6);
     cursor: pointer;
@@ -156,8 +156,8 @@ section {
     position: absolute;
     top: 1px;
     left: 1px;
-    width: 13px;
-    height: 13px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     background-color: #fff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -220,6 +220,7 @@ section {
     color: var(--first-font);
     width: 60%;
     margin-top: 20px;
+    text-align: center;
 }
 
 .player-space {
@@ -229,11 +230,12 @@ section {
     justify-content: center;
     padding: 0 8px;
     margin: 3px 0;
-    border-bottom: 1px solid #ffffff;
-    /* border-radius: 5px; */
+    border: 1px solid #ffffff;
+    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    color: #fff;
+    color: #000;
+    background-color: rgba(255, 255, 255, 0.4);
   }
 
   .player-empty {
@@ -241,16 +243,17 @@ section {
 }
 
 .player-setter {
-    background-color: #a4e8a4; /* Verde claro para levantadores */
+    background-color: #298129; /* Verde claro para levantadores */
     border-radius: 8px;
     border: none;
-    color: #252525;
+    color: #ffffff;
 }
 
 .player-female {
     background-color: #965296; /* Lilás para mulheres */
     border-radius: 8px;
     border: none;
+    color: #fff;
 }
 
 .player-selected {
@@ -268,7 +271,9 @@ section {
     background-color: rgb(230, 106, 106);
     width: 100%;
     height: 30px;
-    border: 2px solid white;
+    border: 2px solid rgb(255, 0, 0);
     border-radius: 4px;
     font-weight: bold;
+    color: #fff;
+    margin-top: 20px;
 }

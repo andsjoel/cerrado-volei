@@ -71,24 +71,35 @@ function renderTeamsFromFirestore(teamsData) {
 
         const playerList = document.createElement('ul');
 
-        team.players.forEach((player, playerIndex) => {
+        for (let i = 0; i < 6; i++) {
             const playerItem = document.createElement('div');
-            const playerName = document.createElement('p');
             playerItem.classList.add('player-space');
-            if (player) {
-                playerName.textContent = player.name;
-                playerItem.appendChild(playerName)
-                if (player.isSetter) {
-                    playerItem.classList.add('player-setter');
-                }
-                if (player.isFemale) {
-                    playerItem.classList.add('player-female');
-                }
+    
+            if (team.players[i]) {
+                const player = team.players[i];
+                const playerName = `${player.name}`;
+                const tagP = document.createElement('p');
+                tagP.textContent = playerName;
+    
+                playerItem.appendChild(tagP);
+    
+                // playerItem.textContent = `${player.name}`;
+                if (player.isSetter) playerItem.classList.add('player-setter');
+                if (player.isFemale) playerItem.classList.add('player-female');
+                playerItem.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    selectPlayer(player, playerItem);
+                });
             } else {
-                playerItem.textContent = 'Vazio';
+                playerItem.textContent = 'ʕ•́ᴥ•̀ʔっ';
+                playerItem.classList.add('player-empty');
+                playerItem.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    selectEmptySpace(playerItem, teams.indexOf(team), i);
+                });
             }
             playerList.appendChild(playerItem);
-        });
+        }
 
         teamDiv.appendChild(playerList);
         teamsContainer.appendChild(teamDiv);

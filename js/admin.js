@@ -199,6 +199,29 @@ function canAddPlayerToTeam(team, player) {
     return true;
 }
 
+document.getElementById('saideira').addEventListener('click', function () {
+    let newArray = []
+
+    for (let team of teams) {
+        team.players.forEach(player => {
+            newArray.push(player);
+        })
+    }
+
+    const confirmMix = confirm('Deseja misturar todos os jogadores?');
+
+    if (confirmMix) {
+        teams = [];
+        const mixPlayers = shuffleArray(newArray);
+        mixPlayers.forEach(player => {
+            addPlayerToTeam(player);
+        });
+    }
+
+    renderTeams();
+    saveTeamsToFirestore();
+});
+
 // Função para remover o jogador selecionado
 document.getElementById('removePlayerBtn').addEventListener('click', function () {
     if (selectedPlayer) {
