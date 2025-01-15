@@ -25,7 +25,7 @@ body {
 
 header {
     background-color: #001247;
-    border-bottom: 3px solid #98cf16;
+    border-bottom: 3px solid #ECC200;
     color: #fff;
     display: flex;
     justify-content: space-around;
@@ -60,9 +60,9 @@ header div button {
     height: 30px;
     border: none;
     border-radius: 0 4px 4px 0;
-    text-transform: uppercase;
-    background-color: #3bb12b;
-    color: var(--first-font);
+    /* text-transform: uppercase; */
+    background-color: #1CD500;
+    color: #000;
     font-weight: bold;
 }
 
@@ -87,7 +87,7 @@ section {
     background-color: white;
     padding: 8px;
     border-radius: 4px;
-    border: 2px solid rgb(216, 180, 20);
+    border: 2px solid #ECC200;
     font-size: 15px;
   }
   
@@ -121,11 +121,11 @@ section {
 }
 
 .team {
-    border: 2px solid #b0e03f;
+    border: 2px solid rgb(193, 226, 117);
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 8px;
-    background-color: #d6a00c;
+    background-color: #ECC200;
     color: var(--first-font);
     width: 60%;
     margin-top: 20px;
@@ -162,11 +162,11 @@ section {
 }
 
 .player-selected {
-    outline: 2px solid rgb(229, 255, 0);
+    outline: 2px solid #ECC200;
 }
 
 .player-empty-selected {
-    outline: 2px solid orange;
+    outline: 2px solid #ECC200;
 }
 
   /* ######################################## ADM PAGE */

@@ -7,7 +7,7 @@
 body {
     width: 100vw;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-color: #000;
+    background-color: #001247;
 }
 
 section {
@@ -17,14 +17,14 @@ section {
     flex-direction: column;
     width: 100vw;
     height: 100%;
-    background-color: #000;
+    background-color: #001247;
     color: var(--sec-font);
 }
 
 /* ################################ RULES */
 
 .rules {
-    background-color: #000;
+    background-color: #001247;
     /* border-bottom: 3px solid #98cf16; */
     color: #fff;
     display: flex;
@@ -36,22 +36,30 @@ section {
 
 .rules button {
     width: 100px;
-    height: 40px;
+    height: 32px;
 }
 
 #clearTeams {
     background-color: red;
     color: #fff;
     text-transform: uppercase;
-    border: 2px solid white;
+    border-radius: 4px;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#clearTeams span {
+    font-size: 20px;
 }
 
 #saideira {
-    background-color: #cf9416;
-    color: #fff;
+    background-color: #ECC200;
+    color: #000;
     width: 180px;
     border: none;
-    border-radius: 10px;
+    border-radius: 4px;
     font-weight: bold;
     text-transform: uppercase;
 }
@@ -119,7 +127,7 @@ section {
 .checkbox-apple {
     position: relative;
     width: 50px;
-    height: 25px;
+    height: 15px;
     margin: 10px;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -136,7 +144,7 @@ section {
     top: 0;
     left: 0;
     width: 50px;
-    height: 25px;
+    height: 15px;
     border-radius: 50px;
     background: linear-gradient(to bottom, #b3b3b3, #e6e6e6);
     cursor: pointer;
@@ -148,8 +156,8 @@ section {
     position: absolute;
     top: 1px;
     left: 1px;
-    width: 23px;
-    height: 23px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
     background-color: #fff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -177,7 +185,7 @@ section {
     top: 0;
     left: 0;
     width: 50px;
-    height: 25px;
+    height: 15px;
   }
 
   /* ######################################## TEAMS */
@@ -247,8 +255,20 @@ section {
 
 .player-selected {
     outline: 2px solid rgb(229, 255, 0);
+    background-color: #3b214b;
+    border-radius: 10px;
+    color: #fff;
 }
 
 .player-empty-selected {
     outline: 2px solid orange;
+}
+
+.win-button {
+    background-color: rgb(230, 106, 106);
+    width: 100%;
+    height: 30px;
+    border: 2px solid white;
+    border-radius: 4px;
+    font-weight: bold;
 }

@@ -205,6 +205,7 @@ document.getElementById('removePlayerBtn').addEventListener('click', function ()
         // Encontrar o time e remover o jogador
         for (let team of teams) {
             const playerIndex = team.players.indexOf(selectedPlayer.player);
+
             if (playerIndex !== -1) {
                 team.players.splice(playerIndex, 1);
                 break;
@@ -334,7 +335,7 @@ function shuffleArray(array) {
 // Função auxiliar para criar botão de vitória
 function createWinButton(teamIndex) {
     const winButton = document.createElement('button');
-    winButton.textContent = 'Redistribuir';
+    winButton.textContent = 'Redistribuir Time';
     winButton.classList.add('win-button');
     winButton.addEventListener('click', function () {
         handleWin(teamIndex);
@@ -361,7 +362,13 @@ function createTeamElement(team, title, teamIndex = null) {
 
         if (team.players[i]) {
             const player = team.players[i];
-            playerItem.textContent = `${player.name} ${player.wins || 0}`; // Exibe o número de vitórias
+            const playerName = `${player.name}`;
+            const tagP = document.createElement('p');
+            tagP.textContent = playerName;
+
+            playerItem.appendChild(tagP);
+
+            // playerItem.textContent = `${player.name}`;
             if (player.isSetter) playerItem.classList.add('player-setter');
             if (player.isFemale) playerItem.classList.add('player-female');
             playerItem.addEventListener('click', function (event) {
@@ -369,7 +376,7 @@ function createTeamElement(team, title, teamIndex = null) {
                 selectPlayer(player, playerItem);
             });
         } else {
-            playerItem.textContent = '?';
+            playerItem.textContent = 'ʕ•́ᴥ•̀ʔっ';
             playerItem.classList.add('player-empty');
             playerItem.addEventListener('click', function (event) {
                 event.stopPropagation();
