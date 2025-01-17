@@ -116,7 +116,7 @@ db.collection('teams').doc('currentTeams').onSnapshot((doc) => {
     }
 });
 
-const correctPassword = "123";
+const correctPassword = "admvolei2025";
 
 document.getElementById("admBtn").addEventListener("click", function() {
     const inputPass = document.getElementById("admPass").value;
