@@ -1,10 +1,5 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyAmnAK5EBYza79MQJmU4nTKVIzTjeOmEhw",
     authDomain: "cerrado-volei.firebaseapp.com",
@@ -14,7 +9,6 @@ const firebaseConfig = {
     appId: "1:687787718559:web:47e3fddd979dee4fd06faa"
   };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
@@ -28,23 +22,15 @@ function renderTeamsFromFirestore(teamsData) {
         const ballonHq = document.createElement('div');
         ballonHq.classList.add('ballon-hq');
 
-        const imgHq = document.createElement('img');
-        imgHq.src = '../img/marvelvsdc.png';
-        imgHq.alt = 'Test'
-
         const waitingMessage = document.createElement('h2');
         waitingMessage.textContent = "Esperando pelo primeiro jogador";
         waitingMessage.classList.add('blink')
-        // ballonHq.appendChild(imgHq)
         ballonHq.appendChild(waitingMessage);
 
         teamsContainer.appendChild(ballonHq);
 
         const balao = document.createElement('p');
 
-        balloon.appendChild(balao)
-
-        teamsContainer.appendChild(balloon);
         return;
     }
 
@@ -80,6 +66,8 @@ function renderTeamsFromFirestore(teamsData) {
                 const playerName = `${player.name}`;
                 const tagP = document.createElement('p');
                 tagP.textContent = playerName;
+                const playerWins = document.createElement('span');
+                playerWins.textContent = `${player.wins}`
     
                 playerItem.appendChild(tagP);
     
@@ -116,7 +104,7 @@ db.collection('teams').doc('currentTeams').onSnapshot((doc) => {
     }
 });
 
-const correctPassword = "123";
+const correctPassword = "admvolei2025";
 
 document.getElementById("admBtn").addEventListener("click", function() {
     const inputPass = document.getElementById("admPass").value;

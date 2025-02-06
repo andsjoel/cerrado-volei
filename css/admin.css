@@ -24,59 +24,87 @@ section {
 /* ################################ RULES */
 
 .rules {
-    background-color: #001247;
+    /* background-color: #001247; */
+    /* border: 1px solid #ECC200; */
     /* border-bottom: 3px solid #98cf16; */
     color: #fff;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     width: 100vw;
-    height: 70px;
+    /* background-color: yellow; */
+    height: 60px;
+    /* width: 100vw;
+    height: 70px; */
+    /* flex-wrap: wrap; */
+    /* padding: 15px; */
+    /* position: absolute; */
+    /* top: 0; */
+    /* background-color: yellow; */
 }
 
 .rules button {
-    width: 100px;
-    height: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none;
+    /* border-right: 1px solid #fff; */
+    /* border-left: 1px solid #fff; */
+    width: 25%;]height: 100%;
+}
+
+.rules button span img {
+    width: 25px;
 }
 
 #clearTeams {
-    background-color: red;
+    background-color: transparent;
     color: #fff;
-    text-transform: uppercase;
-    border-radius: 4px;
-    border: 1px solid white;
+    /* text-transform: uppercase; */
+    /* border-radius: 4px; */
+    /* border: 1px solid white; */
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
 
-#clearTeams span {
-    font-size: 20px;
+#undo-btn {
+    /* font-size: 25px; */
+    background-color: transparent;
+    /* text-transform: uppercase; */
+    width: 25%;
+    display: flex;
 }
 
 #saideira {
-    background-color: #ECC200;
-    color: #000;
-    width: 180px;
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
-    text-transform: uppercase;
+    background-color: transparent;
+    /* color: #000; */
+    /* width: 180px; */
+    /* border: none; */
+    /* border-radius: 4px; */
+    /* font-weight: bold; */
+    /* text-transform: uppercase; */
 }
 
 #playerForm {
     background-color: #3b214b;
-    /* border-bottom: 3px solid #98cf16; */
+    /* border-top: 3px solid #98cf16; */
     color: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    /* align-items: center; */
-    width: 90vw;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
     /* height: 100px; */
-    padding: 20px;
-    margin-top: 10px;
-    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 25px;
+    /* margin-top: 10px; */
+    /* border-radius: 15px; */
+    position: relative;
+    border-bottom: 1px solid white;
 }
 
 #playerForm label {
@@ -85,41 +113,64 @@ section {
 
 #playerName {
     height: 30px;
-    width: 60%;
+    width: 80%;
     padding: 0 8px;
     border-radius: 10px;
     border: none;
+    border-bottom: 3px solid #33CC66;
 }
 
 #add-player {
-    border-radius: 50%;
+    /* border-radius: 50%; */
     border: none;
-    width: 40px;
-    height: 40px;
-    background-color: #5de24e;
+    /* width: 20px; */
+    /* height: 20px; */
+    background-color: transparent;
     color: #301e3b;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 40px;
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding: 5px; */
+    /* position: absolute; */
+    /* bottom: -17px; */
+    /* left: 43%; */
+    /* left: 168px; */
+}
+
+#add-player img {
+    width: 48px;
+}
+
+#removePlayerBtn {
+    display: none;
+}
+
+#removePlayerBtnShow {
+    display: block;
+    background-color: transparent;
+    border: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 20px;
+    color: #db6b6b;
+    /* border: 2px solid #5de24e; */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#removePlayerBtn {
-    display: none;
-    margin-top: 20px;
-    height: 30px;
-    width: 50%;
-}
-
 /* ##################################### CHECKBOX */
 
 .checkbox-container {
-    width: 100%;
+    width: 80%;
     display: flex;
     justify-content: space-between;
     align-items: end;
+    /* padding: 5px; */
 }
 
 
@@ -127,8 +178,8 @@ section {
 .checkbox-apple {
     position: relative;
     width: 50px;
-    height: 25px;
-    margin: 10px;
+    height: 15px;
+    margin: 15px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -136,7 +187,10 @@ section {
   }
 
   .checkbox-apple span {
-    margin-left: 60px;
+    margin-left: 55px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
   }
   
   .checkbox-apple label {
@@ -144,7 +198,7 @@ section {
     top: 0;
     left: 0;
     width: 50px;
-    height: 25px;
+    height: 18px;
     border-radius: 50px;
     background: linear-gradient(to bottom, #b3b3b3, #e6e6e6);
     cursor: pointer;
@@ -154,10 +208,10 @@ section {
   .checkbox-apple label:after {
     content: '';
     position: absolute;
-    top: 1px;
+    /* top: 1px; */
     left: 1px;
-    width: 24px;
-    height: 24px;
+    width: 17px;
+    height: 17px;
     border-radius: 50%;
     background-color: #fff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -185,7 +239,7 @@ section {
     top: 0;
     left: 0;
     width: 50px;
-    height: 15px;
+    height: 14px;
   }
 
   /* ######################################## TEAMS */
@@ -225,7 +279,6 @@ section {
 
 .player-space {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     justify-content: center;
     padding: 0 8px;
@@ -236,6 +289,7 @@ section {
     transition: background-color 0.2s ease;
     color: #000;
     background-color: rgba(255, 255, 255, 0.4);
+    justify-content: space-between;
   }
 
   .player-empty {
@@ -261,7 +315,12 @@ section {
     background-color: #3b214b;
     border-radius: 10px;
     color: #fff;
+    text-transform: uppercase;
 }
+
+/* .spaceTotal {
+    background-color: red;
+} */
 
 .player-empty-selected {
     outline: 2px solid orange;
@@ -277,3 +336,131 @@ section {
     color: #fff;
     margin-top: 20px;
 }
+
+/* ############################################### MULHERES INPUT */
+
+  .checkbox-wrapper-10 .tgl {
+    display: none;
+  }
+  .checkbox-wrapper-10 .tgl,
+  .checkbox-wrapper-10 .tgl:after,
+  .checkbox-wrapper-10 .tgl:before,
+  .checkbox-wrapper-10 .tgl *,
+  .checkbox-wrapper-10 .tgl *:after,
+  .checkbox-wrapper-10 .tgl *:before,
+  .checkbox-wrapper-10 .tgl + .tgl-btn {
+    box-sizing: border-box;
+  }
+  .checkbox-wrapper-10 .tgl::-moz-selection,
+  .checkbox-wrapper-10 .tgl:after::-moz-selection,
+  .checkbox-wrapper-10 .tgl:before::-moz-selection,
+  .checkbox-wrapper-10 .tgl *::-moz-selection,
+  .checkbox-wrapper-10 .tgl *:after::-moz-selection,
+  .checkbox-wrapper-10 .tgl *:before::-moz-selection,
+  .checkbox-wrapper-10 .tgl + .tgl-btn::-moz-selection,
+  .checkbox-wrapper-10 .tgl::selection,
+  .checkbox-wrapper-10 .tgl:after::selection,
+  .checkbox-wrapper-10 .tgl:before::selection,
+  .checkbox-wrapper-10 .tgl *::selection,
+  .checkbox-wrapper-10 .tgl *:after::selection,
+  .checkbox-wrapper-10 .tgl *:before::selection,
+  .checkbox-wrapper-10 .tgl + .tgl-btn::selection {
+    background: none;
+  }
+  .checkbox-wrapper-10 .tgl + .tgl-btn {
+    outline: 0;
+    display: block;
+    width: 4em;
+    height: 3em;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+  }
+  .checkbox-wrapper-10 .tgl + .tgl-btn:after,
+  .checkbox-wrapper-10 .tgl + .tgl-btn:before {
+    position: relative;
+    display: block;
+    content: "";
+    width: 50%;
+    height: 20px;
+    padding: 5px;
+  }
+  .checkbox-wrapper-10 .tgl + .tgl-btn:after {
+    left: 0;
+  }
+  .checkbox-wrapper-10 .tgl + .tgl-btn:before {
+    display: none;
+  }
+  .checkbox-wrapper-10 .tgl:checked + .tgl-btn:after {
+    left: 50%;
+  }
+
+  .checkbox-wrapper-10 .tgl-flip + .tgl-btn {
+    padding: 2px;
+    transition: all 0.2s ease;
+    font-family: sans-serif;
+    perspective: 100px;
+  }
+  .checkbox-wrapper-10 .tgl-flip + .tgl-btn:after,
+  .checkbox-wrapper-10 .tgl-flip + .tgl-btn:before {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: all 1s ease;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    /* line-height: 2em; */
+    /* font-weight: bold; */
+    font-size: 18px;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    border-radius: 4px;
+  }
+  .checkbox-wrapper-10 .tgl-flip + .tgl-btn:after {
+    content: attr(data-tg-on);
+    background: #c6025d;
+    transform: rotateY(-180deg);
+  }
+  .checkbox-wrapper-10 .tgl-flip + .tgl-btn:before {
+    background: #4f94a581;
+    content: attr(data-tg-off);
+  }
+  .checkbox-wrapper-10 .tgl-flip + .tgl-btn:active:before {
+    transform: rotateY(-20deg);
+  }
+  .checkbox-wrapper-10 .tgl-flip:checked + .tgl-btn:before {
+    transform: rotateY(180deg);
+  }
+  .checkbox-wrapper-10 .tgl-flip:checked + .tgl-btn:after {
+    transform: rotateY(0);
+    left: 0;
+    background: #bd0068b2;
+    border: 1px solid white;
+  }
+  .checkbox-wrapper-10 .tgl-flip:checked + .tgl-btn:active:after {
+    transform: rotateY(20deg);
+  }
+
+  .span-woman {
+    font-size: 13px;
+    position: absolute;
+    top: 36px;
+    right: 105px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+
+  .optionTeam {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+  }

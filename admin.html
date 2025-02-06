@@ -9,13 +9,21 @@
 <body>
     <section id="adm">
         <div class="rules">
-            <button id="clearTeams">Limpar <span>⚠</span></button>
-            <button id="saideira">Saideira da Cerveja</button>
+            <button id="clearTeams"><span><img src="./images/warning.svg" alt=""></span>Limpar</button>
+            <button id="saideira"><span><img src="./images/beer.svg" alt=""></span>Saideira</button>
             <!-- <button id="populateTeamsButton">Popular Times</button> -->
+            <!-- <input type="checkbox" name="twoWoman" id="twoWoman">
+            <label for="twoWoman"><span>✿</span>Mulheres</label> -->
+            <div class="checkbox-wrapper-10">
+                <input class="tgl tgl-flip" id="cb5" type="checkbox" checked />
+                <label class="tgl-btn" data-tg-off="✿" data-tg-on="✿✿" for="cb5"></label>
+                <span class="span-woman">Mulheres</span>
+            </div>
+            <button id="undo-btn"><span><img src="./images/undo.svg" alt=""></span>Desfazer</button>
         </div>
         <form id="playerForm">
-            <label for="playerName">Nome do Jogador:</label>
-            <input type="text" id="playerName" autocomplete="off" placeholder="Digite o nome" required>
+            <!-- <label for="playerName">Nome do Jogador:</label> -->
+            <input type="text" id="playerName" autocomplete="off" placeholder="Nome do Jogador" required>
             <div class="checkbox-container">
                     <div>
                         <div class="checkbox-apple">
@@ -29,9 +37,10 @@
                             <span>Mulher</span>
                           </div>
                     </div>
-                  <button id="add-player" type="submit">+</button>
+                    <button id="add-player" type="submit"><img src="./images/confirm_ok.svg" alt=""></button>
+
             </div>
-            <button id="removePlayerBtn">Remover Jogador</button>
+            <!-- <button id="add-player" type="submit"><img src="./images/oktest_ok.svg" alt=""></button> -->
         </form>
 
         <div id="teamsContainer">

@@ -1,10 +1,5 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyAmnAK5EBYza79MQJmU4nTKVIzTjeOmEhw",
     authDomain: "cerrado-volei.firebaseapp.com",
@@ -14,7 +9,6 @@ const firebaseConfig = {
     appId: "1:687787718559:web:47e3fddd979dee4fd06faa"
   };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
@@ -23,12 +17,16 @@ let selectedPlayer = null;
 let selectedEmptySpace = null;
 let countWin = 0;
 let teamOnHold = null;
+let backupUndo = [];
 
 const playerForm = document.getElementById('playerForm');
 const teamsContainer = document.getElementById('teams');
 const returningTeamContainer = document.getElementById('returningTeam') //Div para exibir o time que volta
-const removePlayerBtn = document.getElementById('removePlayerBtn');
+// const removePlayerBtn = document.getElementById('removePlayerBtn');
 const admBtn = document.getElementById('admBtn');
+const undoBtn = document.getElementById('undo-btn');
+const twoWoman = document.getElementById("cb5");
+
 
 db.collection('teams').doc('currentTeams').onSnapshot((doc) => {
     if (doc.exists) {
@@ -36,40 +34,61 @@ db.collection('teams').doc('currentTeams').onSnapshot((doc) => {
         teams = data.teams;
         teamOnHold = data.teamOnHold;
 
-        // Atualiza o estado do checkbox "onHold" com o valor salvo
-        const isRuleActive = data.isRuleActive || false; // Define como false se não houver valor salvo        
-        // Renderizar a lista de times na página
+        const isRuleActive = data.isRuleActive || false; 
+        document.getElementById("cb5").checked = isRuleActive;
+
         renderTeams();
-        // saveTeamsToFirestore();
     } else {
         console.log("No teams data found!");
     }
 });
 
-// Função para salvar os times no Firestore
 function saveTeamsToFirestore() {
     const teamsData = teams.map(team => ({
         players: team.players.map(player => player ? {
             name: player.name,
             isSetter: player.isSetter,
             isFemale: player.isFemale,
-            wins: player.wins || 0 // Inclui as vitórias individuais de cada jogador
+            wins: player.wins || 0
         } : null),
         wins: team.wins || 0
     }));
 
-    db.collection('teams').doc('currentTeams').set({
-        teams: teamsData})
-    .then(() => {
-        console.log("Teams saved successfully!");
-    })
-    .catch(error => {
-        console.error("Error saving teams: ", error);
-    });
+    const isRuleActive = document.getElementById("cb5").checked;
+
+    // Criar um backup antes de salvar
+    db.collection('teams').doc('currentTeams').get()
+        .then(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                backupUndo = data.teams // Armazena o backup dos dados antigos
+                // console.log("Backup criado:", backupUndo);
+            }
+
+            // Salvar os novos times no Firestore
+            return db.collection('teams').doc('currentTeams').set({ teams: teamsData, isRuleActive: isRuleActive });
+        })
+        .then(() => {
+            console.log("Teams saved successfully!");
+            // document.getElementById("undo-btn").style.display = "block"; // Mostrar botão de desfazer
+        })
+        .catch(error => {
+            console.error("Error saving teams: ", error);
+        });
 }
+
+twoWoman.addEventListener('click', saveTeamsToFirestore);
+
+undoBtn.addEventListener('click', function () {
+    console.log('undo:', backupUndo);
+    console.log('teams:', teams);
+
+    reRender(backupUndo);
+});
 
 function handleWin(winningTeamIndex) {
     const winningTeam = teams[winningTeamIndex];
+    console.log(winningTeam);
 
     const confirmRedistribute = confirm(`Deseja Redistribuir o time de ${winningTeam.players[0].name}?`)
 
@@ -82,7 +101,20 @@ function handleWin(winningTeamIndex) {
     saveTeamsToFirestore();
 }
 
-// Função para selecionar um jogador
+function handleWinPlayer (winningTeamIndex) {
+    const winningTeam = teams[winningTeamIndex];
+    winningTeam.wins = (winningTeam.wins || 0) + 1;
+
+    winningTeam.players.forEach(player => {
+        if (player) {
+            player.wins = (player.wins || 0) + 1; // Incrementa vitórias do jogador
+        }
+    });
+
+    renderTeams();
+    saveTeamsToFirestore();
+}
+
 function selectPlayer(player, playerElement) {
     // Se já houver um jogador selecionado
     if (selectedPlayer) {
@@ -95,14 +127,16 @@ function selectPlayer(player, playerElement) {
         const confirmSwap = confirm(`Deseja trocar ${selectedPlayer.player.name} por ${player.name}?`);
         if (confirmSwap) {
             swapPlayers(selectedPlayer.player, player);
+        } else {
+            selectedPlayer.element.classList.remove('player-selected');
+            selectedPlayer = null;
         }
 
         // Desmarcar jogador selecionado após a confirmação
-        selectedPlayer.element.classList.remove('player-selected');
-        selectedPlayer = null;
+        
+        // selectedPlayer = null;
 
         // Atualiza a interface
-        renderTeams();
         return;
     }
 
@@ -114,10 +148,11 @@ function selectPlayer(player, playerElement) {
 
     // Marcar o novo jogador como selecionado
     selectedPlayer = { player: player, element: playerElement };
+    // console.log(playerElement);
     playerElement.classList.add('player-selected');
 
     // Exibir o botão de remover
-    document.getElementById('removePlayerBtn').style.display = 'block';
+    // document.getElementById('removePlayerBtn').style.display = 'block';
 }
 
 // Função para trocar jogadores
@@ -151,6 +186,8 @@ function selectEmptySpace(playerElement, teamIndex, playerIndex) {
     // Marcar o espaço vazio como selecionado
     selectedEmptySpace = { element: playerElement, teamIndex: teamIndex, playerIndex: playerIndex };
     playerElement.classList.add('player-empty-selected');
+
+    renderTeams();
 }
 
 // Função para adicionar jogador ao time
@@ -179,22 +216,49 @@ function addPlayerToTeam(player) {
         newTeam.players.push(player);
         teams.push(newTeam);
     }
-    saveTeamsToFirestore();
+    // saveTeamsToFirestore();
 }
 
 // Função para verificar se o jogador pode ser adicionado a um time
+// function canAddPlayerToTeam(team, player) {
+//     const isSetterInTeam = team.players.some(p => p && p.isSetter);
+//     const isFemaleInTeam = team.players.some(p => p && p.isFemale);
+//     const countFemaleInTeam = team.players.filter(p => p && p.isFemale).length;
+//     console.log(countFemaleInTeam);
+//     console.log(teams);
+
+//     // console.log('VALUE', twoWoman.checked);
+
+//     const teamNotFull = team.players.length < 6;
+
+
+//     if (!teamNotFull) return false;
+//     if (player.isSetter && isSetterInTeam) return false;
+//     if (player.isFemale && twoWoman.checked && countFemaleInTeam >= 2) return false;
+//     if (player.isFemale && isFemaleInTeam) return false;
+
+//     return true;
+// }
+
 function canAddPlayerToTeam(team, player) {
     const isSetterInTeam = team.players.some(p => p && p.isSetter);
     const isFemaleInTeam = team.players.some(p => p && p.isFemale);
+    const countFemaleInTeam = team.players.filter(p => p && p.isFemale).length;
+    console.log(countFemaleInTeam);
+    console.log(teams);
 
     const teamNotFull = team.players.length < 6;
 
-    // Regras para adicionar um jogador:
-    // - O time deve ter menos de 6 jogadores
-    // - Só pode ter um levantador e uma mulher no time
+
     if (!teamNotFull) return false;
+    if (!isSetterInTeam && team.players.length >= 5 && !player.isSetter) return false;
     if (player.isSetter && isSetterInTeam) return false;
-    if (player.isFemale && isFemaleInTeam) return false;
+
+    if(twoWoman.checked) {
+        if (player.isFemale && countFemaleInTeam >= 2) return false;
+    } else {
+        if (player.isFemale && isFemaleInTeam) return false;
+    }
 
     return true;
 }
@@ -223,27 +287,42 @@ document.getElementById('saideira').addEventListener('click', function () {
 });
 
 // Função para remover o jogador selecionado
-document.getElementById('removePlayerBtn').addEventListener('click', function () {
-    if (selectedPlayer) {
-        // Encontrar o time e remover o jogador
-        for (let team of teams) {
-            const playerIndex = team.players.indexOf(selectedPlayer.player);
+// const deleteBtn = document.getElementById('removePlayerBtn');
 
-            if (playerIndex !== -1) {
-                team.players.splice(playerIndex, 1);
-                break;
-            }
-        }
+// if (deleteBtn) {
+//     deleteBtn.addEventListener('click', function () {
+//         if (selectedPlayer) {
+//             // Encontrar o time e remover o jogador
+//             for (let team of teams) {
+//                 const playerIndex = team.players.indexOf(selectedPlayer.player);
+    
+//                 if (playerIndex !== -1) {
+//                     team.players.splice(playerIndex, 1);
+//                     break;
+//                 }
+//             }
+    
+//             // Limpar seleção e esconder botão de remover
+//             // selectedPlayer = null;
+//             this.style.display = 'none';
+    
+//             reRender(teams);
+    
+//             // Re-renderizar os times
+//             // renderTeams();
+//             saveTeamsToFirestore();
+//         }
+//     });
+// }
 
-        // Limpar seleção e esconder botão de remover
-        selectedPlayer = null;
-        this.style.display = 'none';
+const deleteBtnShow = document.getElementById('removePlayerBtnShow');
 
-        // Re-renderizar os times
-        renderTeams();
-        saveTeamsToFirestore();
-    }
-});
+if (deleteBtnShow) {
+    deleteBtnShow.addEventListener('click', function () {
+        console.log('aaa');
+    });
+}
+
 
 // Função para adicionar jogador ao formulário
 playerForm.addEventListener('submit', function (e) {
@@ -282,7 +361,10 @@ document.addEventListener('click', function () {
     }
 
     // Esconder o botão de remover se nenhum jogador estiver selecionado
-    document.getElementById('removePlayerBtn').style.display = 'none';
+    // document.getElementById('removePlayerBtnShow').style.display = 'none';
+    // document.getElementById('removePlayerBtn').style.display = 'none';
+
+    renderTeams();
 });
 
 // Função para redistribuir o time perdedor
@@ -366,10 +448,25 @@ function createWinButton(teamIndex) {
     return winButton;
 }
 
+// function createWinPlayerButton() {
+//     const winPlayer = document.createElement('button');
+//     winPlayer.textContent = 'Venceu'
+// };
+
 // Atualização da função que cria a interface dos times
 function createTeamElement(team, title, teamIndex = null) {
     const teamDiv = document.createElement('div');
     teamDiv.classList.add('team');
+
+    teamDiv.addEventListener('click', function () {
+        console.log('akieu', teamIndex);
+
+        const optionTeam = document.createElement('div');
+        optionTeam.classList.add('optionTeam');
+        optionTeam.textContent = 'aaaaaa'
+
+        teamDiv.appendChild(optionTeam);
+    })
 
     const teamTitle = document.createElement('h3');
     teamTitle.textContent = title;
@@ -377,6 +474,7 @@ function createTeamElement(team, title, teamIndex = null) {
 
     const playerList = document.createElement('div');
     playerList.style.display = 'flex';
+    playerList.classList.add('spaceTotal')
     playerList.style.flexDirection = 'column';
 
     for (let i = 0; i < 6; i++) {
@@ -389,7 +487,16 @@ function createTeamElement(team, title, teamIndex = null) {
             const tagP = document.createElement('p');
             tagP.textContent = playerName;
 
+            const btnDelete = document.createElement('button');
+            btnDelete.textContent = '✖'
+            btnDelete.id = 'removePlayerBtn';
+            // btnDelete.style.display = 'none'
+
             playerItem.appendChild(tagP);
+            playerItem.appendChild(btnDelete);
+
+            // playerList.appendChild(btnDelete);
+
 
             // playerItem.textContent = `${player.name}`;
             if (player.isSetter) playerItem.classList.add('player-setter');
@@ -397,6 +504,34 @@ function createTeamElement(team, title, teamIndex = null) {
             playerItem.addEventListener('click', function (event) {
                 event.stopPropagation();
                 selectPlayer(player, playerItem);
+
+                btnDelete.id = 'removePlayerBtnShow'
+                btnDelete.addEventListener('click', function() {
+                    if (selectedPlayer) {
+                        // Encontrar o time e remover o jogador
+                        for (let team of teams) {
+                            const playerIndex = team.players.indexOf(selectedPlayer.player);
+                            
+                            if (playerIndex !== -1) {
+                                team.players.splice(playerIndex, 1);
+                                selectedPlayer = null;
+                                break;
+                            }
+                        }
+                
+                        // Limpar seleção e esconder botão de remover
+                        selectedPlayer = null;
+                        this.style.display = 'none';
+                
+                        reRender(teams);
+                
+                        // Re-renderizar os times
+                        // saveTeamsToFirestore();
+                        setTimeout(() => {
+                            selectedPlayer = null;
+                        }, 100);
+                    }
+                })
             });
         } else {
             playerItem.textContent = 'ʕ•́ᴥ•̀ʔっ';
@@ -424,7 +559,6 @@ function createTeamElement(team, title, teamIndex = null) {
 
 // Função para renderizar os times atualizada com os botões "Venceu"
 function renderTeams() {
-    // console.log('Render Teams:', teams);
     teamsContainer.innerHTML = ''; // Limpa o container de times
 
     // Remover times vazios (com 0 jogadores)
@@ -452,7 +586,6 @@ function renderTeams() {
         // Adicionar o "X" entre os dois times
         const vsDiv = document.createElement('div');
         vsDiv.classList.add('versus');
-        vsDiv.textContent = 'X';
         playingTeamsContainer.appendChild(vsDiv);
 
         if (team2Div) {
@@ -470,13 +603,27 @@ function renderTeams() {
     }
 }
 
+function reRender (test) {
+    const allPlayers = test.flatMap(team => team.players);
+
+    teams = [];
+
+    allPlayers.forEach(player => {
+        addPlayerToTeam(player);
+    });
+
+    renderTeams();
+    saveTeamsToFirestore();
+}
+
 // Adicionando o evento para o botão de popular times
 document.getElementById('clearTeams').addEventListener('click', clearTeams);
 // document.getElementById('populateTeamsButton').addEventListener('click', populateTeams);
 
+
 const mockPlayers = [
     // Levantadores
-    { id: 1, name: "Pedrin", isSetter: true, isFemale: false },
+    { id: 1, name: "Pedrin", isSetter: true, isFemale: false, wins: 1 },
     { id: 2, name: "Ramon", isSetter: true, isFemale: false },
     { id: 3, name: "Lopes", isSetter: true, isFemale: false },
     { id: 4, name: "Luciano", isSetter: true, isFemale: false },
@@ -511,6 +658,7 @@ const mockPlayers = [
 
 ];
 
+
 function populateTeams() {
     mockPlayers.forEach(player => {
         addPlayerToTeam(player);
@@ -529,6 +677,7 @@ function clearTeams() {
     }
 }
 
+
 // ##########################
 
         // Verifica se o usuário está autenticado
@@ -536,3 +685,12 @@ function clearTeams() {
             // Se não estiver autenticado, redireciona para a página inicial
             window.location.href = "index.html";
         }
+
+
+// const team = document.getElementById('team');
+
+// if (team) {
+//     team.addEventListener('click', function () {
+//         console.log('time clicado');
+//     })
+// }
