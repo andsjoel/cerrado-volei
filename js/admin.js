@@ -244,14 +244,12 @@ function canAddPlayerToTeam(team, player) {
     const isSetterInTeam = team.players.some(p => p && p.isSetter);
     const isFemaleInTeam = team.players.some(p => p && p.isFemale);
     const countFemaleInTeam = team.players.filter(p => p && p.isFemale).length;
-    console.log(countFemaleInTeam);
-    console.log(teams);
 
     const teamNotFull = team.players.length < 6;
 
 
     if (!teamNotFull) return false;
-    if (!isSetterInTeam && team.players.length >= 5 && !player.isSetter) return false;
+    // if (!isSetterInTeam && team.players.length >= 5 && !player.isSetter) return false;
     if (player.isSetter && isSetterInTeam) return false;
 
     if(twoWoman.checked) {
