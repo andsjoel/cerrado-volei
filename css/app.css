@@ -113,7 +113,7 @@ section {
     min-height: 100vh;
 }
 
-.ballon-hq {
+.waitDiv {
     height: 100vh;
     display: flex;
     align-items: center;

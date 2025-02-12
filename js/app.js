@@ -13,23 +13,18 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 const teamsContainer = document.getElementById('teamsContainer');
-const waitingPlayer = document.getElementById('waitingPlayer');
 
 function renderTeamsFromFirestore(teamsData) {
     teamsContainer.innerHTML = '';
 
     if (!teamsData || teamsData.length === 0) {
-        const ballonHq = document.createElement('div');
-        ballonHq.classList.add('ballon-hq');
-
+        const waitDiv = document.createElement('div');
+        waitDiv.classList.add('waitDiv');
         const waitingMessage = document.createElement('h2');
         waitingMessage.textContent = "Esperando pelo primeiro jogador";
         waitingMessage.classList.add('blink')
-        ballonHq.appendChild(waitingMessage);
-
-        teamsContainer.appendChild(ballonHq);
-
-        const balao = document.createElement('p');
+        waitDiv.appendChild(waitingMessage);
+        teamsContainer.appendChild(waitDiv);
 
         return;
     }
@@ -70,8 +65,8 @@ function renderTeamsFromFirestore(teamsData) {
                 playerWins.textContent = `${player.wins}`
     
                 playerItem.appendChild(tagP);
+                playerItem.appendChild(playerWins)
     
-                // playerItem.textContent = `${player.name}`;
                 if (player.isSetter) playerItem.classList.add('player-setter');
                 if (player.isFemale) playerItem.classList.add('player-female');
                 playerItem.addEventListener('click', function (event) {
@@ -88,7 +83,6 @@ function renderTeamsFromFirestore(teamsData) {
             }
             playerList.appendChild(playerItem);
         }
-
         teamDiv.appendChild(playerList);
         teamsContainer.appendChild(teamDiv);
     });
@@ -109,10 +103,8 @@ const correctPassword = "admvolei2025";
 document.getElementById("admBtn").addEventListener("click", function() {
     const inputPass = document.getElementById("admPass").value;
 
-    // Verifica se a senha inserida está correta
     if (inputPass === correctPassword) {
         localStorage.setItem("isAdmin", "true");
-        // Se correta, redireciona para a página de administrador
         window.location.href = "admin.html";
     } else {
         alert("Senha incorreta!");
