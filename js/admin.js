@@ -15,22 +15,28 @@ const db = firebase.firestore();
 let teams = [];
 let selectedPlayer = null;
 let selectedEmptySpace = null;
-let teamOnHold = null;
 let backupUndo = [];
+let someActive = false;
 
 const playerForm = document.getElementById('playerForm');
 const teamsContainer = document.getElementById('teams');
-const returningTeamContainer = document.getElementById('returningTeam');
 const undoBtn = document.getElementById('undo-btn');
 const twoWoman = document.getElementById("cb5");
-const deleteBtnShow = document.getElementById('removePlayerBtnShow');
 
+// setTimeout(() => {
+//     document.addEventListener('click', function () {
+//         if (someActive) {
+//             someActive = false;
+//             // renderTeams();
+//             window.location.reload();
+//         }
+//     });
+// }, 500);
 
 db.collection('teams').doc('currentTeams').onSnapshot((doc) => {
     if (doc.exists) {
         const data = doc.data();
         teams = data.teams;
-        teamOnHold = data.teamOnHold;
 
         const isRuleActive = data.isRuleActive || false; 
         document.getElementById("cb5").checked = isRuleActive;
@@ -76,14 +82,23 @@ undoBtn.addEventListener('click', function () {
     reRender(backupUndo);
 });
 
-function handleWin(winningTeamIndex) {
+function redistributeTeam(winningTeamIndex, lostOrWin) {
     const winningTeam = teams[winningTeamIndex];
 
-    const confirmRedistribute = confirm(`Deseja Redistribuir o time de ${winningTeam.players[0].name}?`)
+    if (lostOrWin === 'win') {
+        const confirmRedistribute = confirm(`O time de ${winningTeam.players[0].name} GANHOU e todos os jogadores receberão 1 vitória! Confirma que o time vencedor será redistribuído?`)
 
-    if(confirmRedistribute) {
-        redistributeLosingTeam(winningTeam);
-        teams.splice(winningTeamIndex, 1);
+        if(confirmRedistribute) {
+            redistributeLosingTeam(winningTeam);
+            teams.splice(winningTeamIndex, 1);
+        }
+    } else {
+        const confirmRedistribute = confirm(`Que pena, perderam... Deseja Redistribuir o time de ${winningTeam.players[0].name}?`)
+
+        if(confirmRedistribute) {
+            redistributeLosingTeam(winningTeam);
+            teams.splice(winningTeamIndex, 1);
+        }
     }
 
     renderTeams();
@@ -93,15 +108,23 @@ function handleWin(winningTeamIndex) {
 function selectPlayer(player, playerElement) {
     if (selectedPlayer) {
         if (selectedPlayer.player === player) {
+            selectedPlayer.element.classList.remove('player-selected');
+            selectedPlayer = null;
+
+            renderTeams();
             return;
         }
 
         const confirmSwap = confirm(`Deseja trocar ${selectedPlayer.player.name} por ${player.name}?`);
         if (confirmSwap) {
             swapPlayers(selectedPlayer.player, player);
+            selectedPlayer.element.classList.remove('player-selected');
+            selectedPlayer = null;
+            renderTeams();
         } else {
             selectedPlayer.element.classList.remove('player-selected');
             selectedPlayer = null;
+            renderTeams();
         }
 
         return;
@@ -230,19 +253,9 @@ playerForm.addEventListener('submit', function (e) {
     saveTeamsToFirestore();
 });
 
-document.addEventListener('click', function () {
-    if (selectedPlayer) {
-        selectedPlayer.element.classList.remove('player-selected');
-        selectedPlayer = null;
-    }
 
-    if (selectedEmptySpace) {
-        selectedEmptySpace.element.classList.remove('player-empty-selected');
-        selectedEmptySpace = null;
-    }
 
-    renderTeams();
-});
+
 
 function redistributeLosingTeam(losingTeam) {
     let remainingPlayers = [];
@@ -305,27 +318,80 @@ function shuffleArray(array) {
     return array;
 }
 
-function createWinButton(teamIndex) {
-    const winButton = document.createElement('button');
-    winButton.textContent = 'Redistribuir Time';
-    winButton.classList.add('win-button');
-    winButton.addEventListener('click', function () {
-        handleWin(teamIndex);
+// function createOptionButton(teamIndex) {
+//     const optButton = document.createElement('div');
+//     optButton.textContent = '...';
+//     optButton.classList.add('opt-button');
+//     optButton.addEventListener('click', function () {
+//         console.log('option button');
+//         optButton.classList.add('opt-button-open')
+//     });
+//     return optButton;
+// }
+
+function createRedistributeButton(teamIndex) {
+    const redistributeButton = document.createElement('div');
+    redistributeButton.textContent = 'Redistribuir Time';
+    redistributeButton.classList.add('redistribute-button')
+
+    const winBtn = document.createElement('button');
+    winBtn.textContent = 'Venceu'
+    winBtn.classList.add('win-btn');
+    // winBtn.style.display = 'none';
+
+    const lostBtn = document.createElement('button');
+    lostBtn.textContent = 'Perdeu'
+    lostBtn.classList.add('lost-btn');
+    // lostBtn.style.display = 'none';
+
+    redistributeButton.classList.add('redistribute-button');
+    redistributeButton.addEventListener('click', function () {
+        // console.log('clicou');
+        redistributeButton.textContent = '';
+
+        redistributeButton.appendChild(winBtn);
+        redistributeButton.appendChild(lostBtn);
+
+        winBtn.addEventListener('click', function () {
+            const lostOrWin = 'win';
+            redistributeTeam(teamIndex, lostOrWin);
+        })
+
+        lostBtn.addEventListener('click', function () {
+            const lostOrWin = 'lost';
+            redistributeTeam(teamIndex, lostOrWin);
+        })
+
+
+
+        // redistributeTeam(teamIndex);
     });
-    return winButton;
+    return redistributeButton;
 }
+
+// function createRedistributeButton(teamIndex) {
+//     const redistributeButton = document.createElement('button');
+//     redistributeButton.textContent = 'Redistribuir Time';
+//     redistributeButton.classList.add('redistribute-button');
+//     redistributeButton.addEventListener('click', function () {
+//         redistributeTeam(teamIndex);
+//     });
+//     return redistributeButton;
+// }
+
+// function createWinButton(teamIndex) {
+//     const winButton = document.createElement('button');
+//     winButton.textContent = 'Vitória!';
+//     winButton.classList.add('win-button');
+//     winButton.addEventListener('click', function () {
+//         redistributeTeam(teamIndex);
+//     });
+//     return winButton;
+// }
 
 function createTeamElement(team, title, teamIndex = null) {
     const teamDiv = document.createElement('div');
     teamDiv.classList.add('team');
-
-    teamDiv.addEventListener('click', function () {
-        const optionTeam = document.createElement('div');
-        optionTeam.classList.add('optionTeam');
-        optionTeam.textContent = 'aaaaaa'
-
-        teamDiv.appendChild(optionTeam);
-    })
 
     const teamTitle = document.createElement('h3');
     teamTitle.textContent = title;
@@ -399,8 +465,13 @@ function createTeamElement(team, title, teamIndex = null) {
 
     teamDiv.appendChild(playerList);
     if (teamIndex === 0 || teamIndex === 1) {
-        const winButton = createWinButton(teamIndex);
-        teamDiv.appendChild(winButton);
+        const redistributeButton = createRedistributeButton(teamIndex);
+        // const winButton = createWinButton(teamIndex);
+        // const optionTeam = createOptionButton(teamIndex);
+
+        // teamDiv.appendChild(optionTeam)
+        // teamDiv.appendChild(winButton);
+        teamDiv.appendChild(redistributeButton);
     }
 
     return teamDiv;
@@ -410,14 +481,6 @@ function createTeamElement(team, title, teamIndex = null) {
 function renderTeams() {
     teamsContainer.innerHTML = '';
     teams = teams.filter(team => team.players.some(player => player));
-
-    if (teamOnHold) {
-        const returningTeamDiv = createTeamElement(teamOnHold, 'Volta');
-        returningTeamContainer.innerHTML = '';
-        returningTeamContainer.appendChild(returningTeamDiv);
-    } else {
-        returningTeamContainer.innerHTML = '';
-    }
 
     if (teams.length > 0) {
         const playingTeamsContainer = document.createElement('div');
@@ -466,7 +529,6 @@ function clearTeams() {
     if (confirmClear) {
         teams = []
         renderTeams();
-        teamOnHold = null;
         saveTeamsToFirestore();
     }
 }
@@ -474,3 +536,19 @@ function clearTeams() {
 if (localStorage.getItem("isAdmin") !== "true") {
     window.location.href = "index.html";
 }
+
+// if (someActive) {
+//     document.addEventListener('click', function () {
+//         if (selectedPlayer) {
+//             selectedPlayer.element.classList.remove('player-selected');
+//             selectedPlayer = null;
+//         }
+    
+//         if (selectedEmptySpace) {
+//             selectedEmptySpace.element.classList.remove('player-empty-selected');
+//             selectedEmptySpace = null;
+//         }
+    
+//         renderTeams();
+//     });
+// }
