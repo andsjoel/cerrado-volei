@@ -334,6 +334,7 @@ function createRedistributeButton(teamIndex) {
             winningTeam.players.forEach(player => {
                 if (player) {
                     player.wins = (player.wins || 0) + 1;
+                }
             });
 
             redistributeTeam(teamIndex, lostOrWin);
