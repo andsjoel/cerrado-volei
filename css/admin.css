@@ -24,23 +24,12 @@ section {
 /* ################################ RULES */
 
 .rules {
-    /* background-color: #001247; */
-    /* border: 1px solid #ECC200; */
-    /* border-bottom: 3px solid #98cf16; */
     color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100vw;
-    /* background-color: yellow; */
     height: 60px;
-    /* width: 100vw;
-    height: 70px; */
-    /* flex-wrap: wrap; */
-    /* padding: 15px; */
-    /* position: absolute; */
-    /* top: 0; */
-    /* background-color: yellow; */
 }
 
 .rules button {
@@ -51,8 +40,6 @@ section {
     color: #fff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     border: none;
-    /* border-right: 1px solid #fff; */
-    /* border-left: 1px solid #fff; */
     width: 25%;]height: 100%;
 }
 
@@ -63,9 +50,6 @@ section {
 #clearTeams {
     background-color: transparent;
     color: #fff;
-    /* text-transform: uppercase; */
-    /* border-radius: 4px; */
-    /* border: 1px solid white; */
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -74,35 +58,24 @@ section {
 #undo-btn {
     /* font-size: 25px; */
     background-color: transparent;
-    /* text-transform: uppercase; */
     width: 25%;
     display: flex;
 }
 
 #saideira {
     background-color: transparent;
-    /* color: #000; */
-    /* width: 180px; */
-    /* border: none; */
-    /* border-radius: 4px; */
-    /* font-weight: bold; */
-    /* text-transform: uppercase; */
 }
 
 #playerForm {
     background-color: #3b214b;
-    /* border-top: 3px solid #98cf16; */
     color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     width: 100vw;
-    /* height: 100px; */
     padding: 10px;
     margin-bottom: 25px;
-    /* margin-top: 10px; */
-    /* border-radius: 15px; */
     position: relative;
     border-bottom: 1px solid white;
 }
@@ -121,10 +94,7 @@ section {
 }
 
 #add-player {
-    /* border-radius: 50%; */
     border: none;
-    /* width: 20px; */
-    /* height: 20px; */
     background-color: transparent;
     color: #301e3b;
     text-transform: uppercase;
@@ -133,11 +103,6 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* padding: 5px; */
-    /* position: absolute; */
-    /* bottom: -17px; */
-    /* left: 43%; */
-    /* left: 168px; */
 }
 
 #add-player img {
@@ -157,7 +122,6 @@ section {
     border-radius: 50%;
     font-size: 20px;
     color: #db6b6b;
-    /* border: 2px solid #5de24e; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -173,8 +137,6 @@ section {
     /* padding: 5px; */
 }
 
-
-/* From Uiverse.io by guilhermeyohan */ 
 .checkbox-apple {
     position: relative;
     width: 50px;
@@ -361,14 +323,11 @@ section {
 
 .win-btn {
   background: linear-gradient(90deg, rgb(58, 160, 49) 50%, #001247 100%);
-  /* background-color: #298129; */
-  /* border-right: 1px solid white; */
 }
 
 .lost-btn {
   background: linear-gradient(90deg, #001247 0%, rgb(224, 84, 84) 50%);
-  /* background-color: red; */
-  /* border-left: 1px solid white; */
+
 }
 
 /* ############################################### MULHERES INPUT */
